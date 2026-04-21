@@ -52,7 +52,7 @@ export const cv: CvData = {
   mode: 'Remote-first',
   email: 'castello.giacomo.90@gmail.com',
   phone: '+39 388 4740108',
-  linkedin: 'https://www.linkedin.com/in/giacomocastello/',
+  linkedin: 'https://www.linkedin.com/in/giacomo-castello-19a50348/',
   born: 1990,
   license: 'B',
 
