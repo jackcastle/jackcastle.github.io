@@ -21,57 +21,79 @@ const title = `${cv.name} — ${cv.role}`;
 <BaseLayout title={title}>
   <TopBar slot="topbar" path="~/cv" />
   <ShellWindow title={`${cv.name.toLowerCase().replace(' ', '_')} — -bash — 132×60`}>
-    <MOTD />
-
-    <Prompt cmd="whoami" />
-    <div class="sh-out">
-      <IdentityBlock cv={cv} />
+    <div data-reveal>
+      <MOTD />
     </div>
 
-    <Prompt cmd="cat summary.md" />
-    <div class="sh-out">
-      <h2 class="sh-md-head"># executive_summary</h2>
-      <p class="sh-summary" set:html={cv.summary}></p>
+    <div data-reveal>
+      <Prompt cmd="whoami" />
+      <div class="sh-out">
+        <IdentityBlock cv={cv} />
+      </div>
     </div>
 
-    <Prompt cmd="./stats --blended" />
-    <div class="sh-out">
-      <StatsGrid cv={cv} />
-      <Divider label="activity: last 6 months" />
-      <Heatmap />
+    <div data-reveal>
+      <Prompt cmd="cat summary.md" />
+      <div class="sh-out">
+        <h2 class="sh-md-head"># executive_summary</h2>
+        <p class="sh-summary" set:html={cv.summary}></p>
+      </div>
     </div>
 
-    <Prompt cmd="ls core_competencies/" />
-    <div class="sh-out">
-      <CompetenciesLs cv={cv} />
+    <div data-reveal>
+      <Prompt cmd="./stats --blended" />
+      <div class="sh-out">
+        <StatsGrid cv={cv} />
+        <Divider label="activity: last 6 months" />
+        <Heatmap />
+      </div>
     </div>
 
-    <Prompt cmd="git log --oneline experience" />
-    <div class="sh-out">
-      <ExperienceLog cv={cv} />
+    <div data-reveal>
+      <Prompt cmd="ls core_competencies/" />
+      <div class="sh-out">
+        <CompetenciesLs cv={cv} />
+      </div>
     </div>
 
-    <Prompt cmd="find projects/ -name '*.sql' -o -name '*.py'" />
-    <div class="sh-out">
-      <ProjectCards cv={cv} />
+    <div data-reveal>
+      <Prompt cmd="git log --oneline experience" />
+      <div class="sh-out">
+        <ExperienceLog cv={cv} />
+      </div>
     </div>
 
-    <Prompt cmd="stack --all" />
-    <div class="sh-out">
-      <StackRows cv={cv} />
+    <div data-reveal>
+      <Prompt cmd="find projects/ -name '*.sql' -o -name '*.py'" />
+      <div class="sh-out">
+        <ProjectCards cv={cv} />
+      </div>
     </div>
 
-    <Prompt cmd="cat education.txt certifications.txt" />
-    <div class="sh-out">
-      <EducationCerts cv={cv} />
+    <div data-reveal>
+      <Prompt cmd="stack --all" />
+      <div class="sh-out">
+        <StackRows cv={cv} />
+      </div>
     </div>
 
-    <Prompt cmd="contact --print" />
-    <div class="sh-out">
-      <ContactPanel cv={cv} />
+    <div data-reveal>
+      <Prompt cmd="cat education.txt certifications.txt" />
+      <div class="sh-out">
+        <EducationCerts cv={cv} />
+      </div>
     </div>
 
-    <Prompt cmd="" caret={true} blink={true} />
+    <div data-reveal>
+      <Prompt cmd="contact --print" />
+      <div class="sh-out">
+        <ContactPanel cv={cv} />
+      </div>
+    </div>
+
+    <div data-reveal>
+      <Prompt cmd="" caret={true} blink={true} />
+    </div>
   </ShellWindow>
 </BaseLayout>
 
