@@ -1,0 +1,120 @@
+@import "tailwindcss";
+@import "@fontsource-variable/jetbrains-mono";
+@import "@fontsource/ibm-plex-mono/400.css";
+@import "@fontsource/ibm-plex-mono/500.css";
+@import "@fontsource/ibm-plex-mono/600.css";
+@import "@fontsource/ibm-plex-mono/700.css";
+
+@theme {
+  --font-display: 'JetBrains Mono Variable', 'Menlo', monospace;
+  --font-body: 'IBM Plex Mono', 'Menlo', monospace;
+  --breakpoint-md: 900px;
+}
+
+:root {
+  --font-display: 'JetBrains Mono Variable', 'Menlo', monospace;
+  --font-body: 'IBM Plex Mono', 'Menlo', monospace;
+
+  --bg: #0a0d10;
+  --bg-1: #0d1117;
+  --bg-2: #151a21;
+  --bg-3: #1c232c;
+  --border: #222b35;
+  --border-soft: #1a2028;
+  --fg: #c9d1d9;
+  --fg-dim: #8b949e;
+  --fg-muted: #6e7781;
+  --fg-hi: #f0f6fc;
+
+  --accent: #7ee787;
+  --accent-2: #56d364;
+  --accent-d: #2ea043;
+
+  --amber: #e3b341;
+  --ember: #f78166;
+  --cyan: #79c0ff;
+  --violet: #d2a8ff;
+  --red: #ff7b72;
+
+  --scan: rgba(126, 231, 135, 0.03);
+}
+
+[data-theme="light"] {
+  --bg: #f6f3ec;
+  --bg-1: #efe9db;
+  --bg-2: #e6dfce;
+  --bg-3: #d9cfb8;
+  --border: #b8ac8e;
+  --border-soft: #cfc2a2;
+  --fg: #1a1a1a;
+  --fg-dim: #5a5447;
+  --fg-muted: #7a7360;
+  --fg-hi: #000;
+
+  --accent: #2d7a38;
+  --accent-2: #1f5a28;
+  --accent-d: #163d1c;
+
+  --amber: #8a5a10;
+  --ember: #b2401a;
+  --cyan: #0a5b8a;
+  --violet: #6c3ab1;
+  --red: #b91c1c;
+
+  --scan: rgba(0, 0, 0, 0.02);
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-body);
+  font-size: 14px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  font-feature-settings: "liga" 1, "calt" 1;
+}
+
+body {
+  background: radial-gradient(ellipse at top, color-mix(in oklab, var(--bg-1), var(--accent) 4%) 0%, var(--bg) 60%);
+  min-height: 100vh;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background-image: repeating-linear-gradient(to bottom, var(--scan) 0, var(--scan) 1px, transparent 1px, transparent 3px);
+  mix-blend-mode: overlay;
+  z-index: 1;
+  opacity: 0.7;
+}
+
+[data-theme="light"] body::before { opacity: 0.4; }
+
+a {
+  color: var(--accent);
+  text-decoration: none;
+  border-bottom: 1px dashed color-mix(in oklab, var(--accent), transparent 60%);
+}
+a:hover { color: var(--fg-hi); border-bottom-color: currentColor; }
+
+.dim { color: var(--fg-dim); }
+strong { color: var(--fg-hi); font-weight: 600; }
+
+.stage {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 20px;
+  position: relative;
+  z-index: 2;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
