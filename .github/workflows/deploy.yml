@@ -29,6 +29,8 @@ jobs:
         run: npm ci
       - name: Build site
         uses: withastro/action@v3
+        with:
+          node-version: 22
 
   deploy:
     needs: build
