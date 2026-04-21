@@ -1,0 +1,62 @@
+---
+import type { CvData } from '../../data/cv';
+interface Props { cv: CvData; }
+const { cv } = Astro.props;
+---
+<div class="sh-proj-grid">
+  {cv.projects.map((p) => (
+    <a class="sh-proj" href={`/projects/${p.slug}/`}>
+      <div class="sh-proj-head">
+        <span class="sh-proj-icon">❯</span>
+        <span class="sh-proj-name">{p.name}</span>
+        <span class="sh-proj-star">★ {p.stars}</span>
+      </div>
+      <div class="sh-proj-lang"><span class="sh-dot"></span> {p.lang}</div>
+      <div class="sh-proj-desc">{p.desc}</div>
+    </a>
+  ))}
+</div>
+
+<style>
+  .sh-proj-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 12px;
+  }
+  .sh-proj {
+    display: block;
+    border: 1px solid var(--border);
+    background: color-mix(in oklab, var(--bg-2), transparent 40%);
+    border-radius: 6px;
+    padding: 14px;
+    transition: border-color 0.2s, transform 0.2s;
+    text-decoration: none;
+    color: inherit;
+  }
+  .sh-proj:hover { border-color: var(--accent); transform: translateY(-1px); }
+  .sh-proj-head {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    font-family: var(--font-display);
+  }
+  .sh-proj-icon { color: var(--accent); }
+  .sh-proj-name { color: var(--cyan); font-weight: 600; }
+  .sh-proj-star { margin-left: auto; color: var(--amber); font-size: 11.5px; }
+  .sh-proj-lang {
+    font-size: 11.5px;
+    color: var(--fg-dim);
+    margin: 4px 0 8px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .sh-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--violet);
+    display: inline-block;
+  }
+  .sh-proj-desc { font-size: 12.5px; color: var(--fg); }
+</style>

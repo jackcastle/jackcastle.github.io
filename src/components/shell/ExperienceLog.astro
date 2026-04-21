@@ -1,0 +1,74 @@
+---
+import type { CvData } from '../../data/cv';
+interface Props { cv: CvData; }
+const { cv } = Astro.props;
+
+const commit = (i: number) => `0x${(0xa1b2c + i * 0x1111).toString(16)}`;
+---
+<div class="sh-log">
+  {cv.experience.map((e, i) => (
+    <article class="sh-job">
+      <header class="sh-job-head">
+        <span class="sh-commit">{commit(i)}</span>
+        <span class="sh-job-title">{e.title}</span>
+        <span class="sh-arrow">→</span>
+        <span class="sh-job-co">{e.company}</span>
+        <span class="sh-job-period">[{e.period}]</span>
+      </header>
+      <div class="sh-job-sub">
+        <span>{e.location}</span>
+        {e.context && (
+          <>
+            <span class="sh-sep-dot">·</span>
+            <span class="dim">{e.context}</span>
+          </>
+        )}
+      </div>
+      <ul class="sh-bullets">
+        {e.bullets.map((b) => (
+          <li>
+            <span class="sh-bullet-mark">▸</span>
+            <span set:html={b}></span>
+          </li>
+        ))}
+      </ul>
+    </article>
+  ))}
+</div>
+
+<style>
+  .sh-job {
+    margin: 12px 0 18px;
+    padding-left: 16px;
+    border-left: 2px solid var(--border);
+  }
+  .sh-job-head {
+    display: flex;
+    gap: 10px;
+    align-items: baseline;
+    flex-wrap: wrap;
+    font-family: var(--font-display);
+  }
+  .sh-commit { color: var(--amber); font-size: 12px; }
+  .sh-job-title { color: var(--fg-hi); font-weight: 600; }
+  .sh-arrow { color: var(--fg-dim); }
+  .sh-job-co { color: var(--accent); font-weight: 600; }
+  .sh-job-period { color: var(--fg-dim); margin-left: auto; font-size: 12px; }
+  .sh-job-sub {
+    color: var(--fg-dim);
+    font-size: 12px;
+    margin: 2px 0 8px;
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .sh-sep-dot { color: var(--border); }
+  .sh-bullets { list-style: none; margin: 0; padding: 0; }
+  .sh-bullets li {
+    display: flex;
+    gap: 10px;
+    padding: 3px 0;
+    max-width: 95ch;
+  }
+  .sh-bullet-mark { color: var(--accent); flex-shrink: 0; }
+</style>

@@ -1,8 +1,89 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import TopBar from '../components/TopBar.astro';
+import ShellWindow from '../components/shell/ShellWindow.astro';
+import MOTD from '../components/shell/MOTD.astro';
+import Prompt from '../components/shell/Prompt.astro';
+import IdentityBlock from '../components/shell/IdentityBlock.astro';
+import StatsGrid from '../components/shell/StatsGrid.astro';
+import Heatmap from '../components/shell/Heatmap.astro';
+import Divider from '../components/shell/Divider.astro';
+import CompetenciesLs from '../components/shell/CompetenciesLs.astro';
+import ExperienceLog from '../components/shell/ExperienceLog.astro';
+import ProjectCards from '../components/shell/ProjectCards.astro';
+import StackRows from '../components/shell/StackRows.astro';
+import EducationCerts from '../components/shell/EducationCerts.astro';
+import ContactPanel from '../components/shell/ContactPanel.astro';
+import { cv } from '../data/cv';
+
+const title = `${cv.name} — ${cv.role}`;
 ---
-<BaseLayout title="Giacomo Castello — Senior Advertising & Martech Manager">
+<BaseLayout title={title}>
   <TopBar slot="topbar" path="~/cv" />
-  <p>hello from topbar</p>
+  <ShellWindow title={`${cv.name.toLowerCase().replace(' ', '_')} — -bash — 132×60`}>
+    <MOTD />
+
+    <Prompt cmd="whoami" />
+    <div class="sh-out">
+      <IdentityBlock cv={cv} />
+    </div>
+
+    <Prompt cmd="cat summary.md" />
+    <div class="sh-out">
+      <h2 class="sh-md-head"># executive_summary</h2>
+      <p class="sh-summary" set:html={cv.summary}></p>
+    </div>
+
+    <Prompt cmd="./stats --blended" />
+    <div class="sh-out">
+      <StatsGrid cv={cv} />
+      <Divider label="activity: last 6 months" />
+      <Heatmap />
+    </div>
+
+    <Prompt cmd="ls core_competencies/" />
+    <div class="sh-out">
+      <CompetenciesLs cv={cv} />
+    </div>
+
+    <Prompt cmd="git log --oneline experience" />
+    <div class="sh-out">
+      <ExperienceLog cv={cv} />
+    </div>
+
+    <Prompt cmd="find projects/ -name '*.sql' -o -name '*.py'" />
+    <div class="sh-out">
+      <ProjectCards cv={cv} />
+    </div>
+
+    <Prompt cmd="stack --all" />
+    <div class="sh-out">
+      <StackRows cv={cv} />
+    </div>
+
+    <Prompt cmd="cat education.txt certifications.txt" />
+    <div class="sh-out">
+      <EducationCerts cv={cv} />
+    </div>
+
+    <Prompt cmd="contact --print" />
+    <div class="sh-out">
+      <ContactPanel cv={cv} />
+    </div>
+
+    <Prompt cmd="" caret={true} blink={true} />
+  </ShellWindow>
 </BaseLayout>
+
+<style>
+  .sh-out { padding: 2px 0; margin-bottom: 4px; }
+  .sh-md-head {
+    color: var(--ember);
+    font-family: var(--font-display);
+    font-weight: 600;
+    margin: 0 0 6px;
+    letter-spacing: 0.02em;
+    font-size: inherit;
+  }
+  .sh-summary { margin: 0; color: var(--fg); max-width: 86ch; }
+</style>

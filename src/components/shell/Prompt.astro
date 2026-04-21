@@ -1,0 +1,30 @@
+---
+interface Props {
+  cmd: string;
+  caret?: boolean;
+  blink?: boolean;
+}
+const { cmd, caret = false, blink = false } = Astro.props;
+---
+<div class="sh-prompt">
+  <span class="sh-user">giacomo</span>
+  <span class="sh-at">@</span>
+  <span class="sh-host">palermo</span>
+  <span class="sh-sep">:</span>
+  <span class="sh-path">~/cv</span>
+  <span class="sh-dollar">$ </span>
+  <span class="sh-cmd">{cmd}</span>
+  {caret && <span class={`sh-caret ${blink ? 'blink' : ''}`}>▍</span>}
+</div>
+
+<style>
+  .sh-prompt { margin: 18px 0 6px; font-family: var(--font-display); }
+  .sh-user { color: var(--accent); font-weight: 600; }
+  .sh-at, .sh-sep, .sh-dollar { color: var(--fg-dim); }
+  .sh-host { color: var(--cyan); font-weight: 600; }
+  .sh-path { color: var(--violet); }
+  .sh-cmd { color: var(--fg-hi); }
+  .sh-caret { color: var(--accent); }
+  .sh-caret.blink { animation: blink 1s step-end infinite; }
+  @keyframes blink { 50% { opacity: 0; } }
+</style>

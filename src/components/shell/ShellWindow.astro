@@ -1,0 +1,48 @@
+---
+interface Props {
+  title: string;
+}
+const { title } = Astro.props;
+---
+<section class="sh-root">
+  <header class="sh-chrome">
+    <div class="sh-chrome-dots" aria-hidden="true">
+      <span class="d d-r"></span><span class="d d-y"></span><span class="d d-g"></span>
+    </div>
+    <div class="sh-chrome-title">{title}</div>
+    <div class="sh-chrome-spacer"></div>
+  </header>
+  <div class="sh-screen">
+    <slot />
+  </div>
+</section>
+
+<style>
+  .sh-root {
+    background: var(--bg-1);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow:
+      0 1px 0 color-mix(in oklab, var(--fg-hi), transparent 92%) inset,
+      0 40px 80px -20px rgba(0, 0, 0, 0.5);
+  }
+  .sh-chrome {
+    display: flex;
+    align-items: center;
+    padding: 9px 14px;
+    background: linear-gradient(180deg, var(--bg-2), var(--bg-1));
+    border-bottom: 1px solid var(--border);
+    font-family: var(--font-display);
+    font-size: 11.5px;
+    color: var(--fg-dim);
+  }
+  .sh-chrome-dots { display: flex; gap: 6px; width: 70px; }
+  .sh-chrome-dots .d { width: 12px; height: 12px; border-radius: 50%; display: block; }
+  .d-r { background: #ff5f57; }
+  .d-y { background: #febc2e; }
+  .d-g { background: #28c840; }
+  .sh-chrome-title { flex: 1; text-align: center; letter-spacing: 0.02em; }
+  .sh-chrome-spacer { width: 70px; }
+  .sh-screen { padding: 22px 28px 60px; font-size: 13.5px; line-height: 1.65; min-height: 70vh; }
+</style>

@@ -1,0 +1,22 @@
+---
+interface Props { label?: string; char?: string; }
+const { label = '', char = '─' } = Astro.props;
+---
+<div class="sh-div">
+  <span>{char.repeat(4)}</span>
+  {label && <span class="sh-div-label"> {label} </span>}
+  <span class="sh-div-fill" aria-hidden="true">{char.repeat(120)}</span>
+</div>
+
+<style>
+  .sh-div {
+    color: var(--border);
+    margin: 12px 0 6px;
+    font-family: var(--font-display);
+    font-size: 11px;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+  .sh-div-label { color: var(--fg-dim); }
+  .sh-div-fill { color: var(--border); }
+</style>
