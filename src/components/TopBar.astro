@@ -9,13 +9,16 @@ interface Props {
 const { path, cvHref = '/cv/Giacomo_Castello_CV_Corporate.pdf' } = Astro.props;
 ---
 <header class="topbar">
-  <a class="tb-brand" href="/">
+  <a class="tb-brand" href="/" aria-label="Giacomo Castello — home">
     <span class="tb-brand-dot" aria-hidden="true"></span>
-    <span>Giacomo Castello</span>
+    <span class="tb-brand-name">Giacomo Castello</span>
   </a>
   <div class="tb-path">/ <b>{path}</b></div>
   <div class="tb-grow"></div>
-  <a class="tb-cv" href={cvHref} download>Download CV</a>
+  <a class="tb-cv" href={cvHref} download>
+    <span class="tb-cv-long">Download CV</span>
+    <span class="tb-cv-short" aria-hidden="true">CV ↓</span>
+  </a>
   <ThemeToggle />
 </header>
 
@@ -65,8 +68,16 @@ const { path, cvHref = '/cv/Giacomo_Castello_CV_Corporate.pdf' } = Astro.props;
     text-transform: uppercase;
   }
   .tb-cv:hover { background: color-mix(in oklab, var(--accent), transparent 80%); }
+  .tb-cv-short { display: none; }
 
   @media (max-width: 900px) {
     .tb-path { display: none; }
+  }
+  @media (max-width: 640px) {
+    .topbar { padding: 8px 12px; gap: 10px; }
+    .tb-brand-name { display: none; }
+    .tb-cv { padding: 6px 10px; }
+    .tb-cv-long { display: none; }
+    .tb-cv-short { display: inline; }
   }
 </style>

@@ -9,8 +9,6 @@ const { cmd, caret = false, blink = false, typed = false } = Astro.props;
 const width = `${cmd.length}ch`;
 ---
 <div class="sh-prompt">
-  <span class="sh-user">giacomo</span>
-  <span class="sh-at">@</span>
   <span class="sh-host">palermo</span>
   <span class="sh-sep">:</span>
   <span class="sh-path">~/cv</span>
@@ -21,8 +19,7 @@ const width = `${cmd.length}ch`;
 
 <style>
   .sh-prompt { margin: 18px 0 6px; font-family: var(--font-display); }
-  .sh-user { color: var(--accent); font-weight: 600; }
-  .sh-at, .sh-sep, .sh-dollar { color: var(--fg-dim); }
+  .sh-sep, .sh-dollar { color: var(--fg-dim); }
   .sh-host { color: var(--cyan); font-weight: 600; }
   .sh-path { color: var(--violet); }
   .sh-cmd { color: var(--fg-hi); }
