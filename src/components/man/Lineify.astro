@@ -1,0 +1,31 @@
+---
+interface Props { start?: number; }
+const { start = 1 } = Astro.props;
+---
+<div class="mn-lineblock">
+  <slot />
+</div>
+
+<style>
+  .mn-lineblock {
+    background: var(--bg);
+    border: 1px solid var(--border-soft);
+    border-radius: 6px;
+    padding: 6px 0;
+    font-family: var(--font-display);
+    font-size: 12.5px;
+  }
+  .mn-lineblock :global(.mn-line) {
+    display: grid;
+    grid-template-columns: 42px 1fr;
+    padding: 1px 0;
+  }
+  .mn-lineblock :global(.mn-ln) {
+    color: var(--fg-muted);
+    text-align: right;
+    padding-right: 10px;
+    border-right: 1px solid var(--border-soft);
+    user-select: none;
+  }
+  .mn-lineblock :global(.mn-line-body) { padding-left: 14px; }
+</style>

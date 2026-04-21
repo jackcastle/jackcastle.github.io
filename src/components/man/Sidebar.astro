@@ -1,0 +1,166 @@
+---
+import type { CvData } from '../../data/cv';
+
+interface TocEntry { id: string; label: string; }
+interface Props {
+  cv: CvData;
+  toc: TocEntry[];
+  manPageId: string;
+  version?: string;
+}
+const { cv, toc, manPageId, version = 'v4.1 · 2026' } = Astro.props;
+const buildDate = new Date().toISOString().slice(0, 10);
+---
+<aside class="mn-aside">
+  <div class="mn-aside-head">
+    <div class="mn-logo">
+      <span class="mn-logo-dot" aria-hidden="true"></span>
+      <span class="mn-logo-txt">{manPageId}</span>
+    </div>
+    <div class="mn-aside-sub">General Commands Manual</div>
+  </div>
+
+  <div class="mn-aside-card">
+    <span class="mn-badge">{version}</span>
+    <div class="mn-aside-name">{cv.name}</div>
+    <div class="mn-aside-role">{cv.role}</div>
+    <div class="mn-aside-meta">
+      <div><span class="mn-k">where</span> {cv.location}</div>
+      <div><span class="mn-k">mode </span> {cv.mode}</div>
+      <div><span class="mn-k">mail </span> <a href={`mailto:${cv.email}`}>{cv.email}</a></div>
+      <div><span class="mn-k">tel  </span> {cv.phone}</div>
+    </div>
+  </div>
+
+  <nav class="mn-toc" aria-label="Section navigation">
+    <div class="mn-toc-title">CONTENTS</div>
+    {toc.map((s) => (
+      <a href={`#${s.id}`} class="mn-toc-a" data-toc-link>
+        <span class="mn-toc-bullet">§</span>
+        <span>{s.label}</span>
+      </a>
+    ))}
+  </nav>
+
+  <div class="mn-aside-foot">
+    <div class="mn-foot-row">
+      <span>Ⓒ 2026</span>
+      <span class="mn-foot-dot">·</span>
+      <span>BUILT {buildDate}</span>
+    </div>
+    <div class="mn-foot-row dim">page 1 of 1</div>
+  </div>
+</aside>
+
+<script>
+  import '../../scripts/scrollspy.ts';
+</script>
+
+<style>
+  .mn-aside {
+    background: var(--bg);
+    border-right: 1px solid var(--border);
+    padding: 20px 18px;
+    overflow-y: auto;
+    font-size: 12.5px;
+  }
+  .mn-aside-head { margin-bottom: 16px; }
+  .mn-logo { display: flex; align-items: center; gap: 8px; }
+  .mn-logo-dot {
+    width: 10px;
+    height: 10px;
+    background: var(--accent);
+    border-radius: 2px;
+    box-shadow: 0 0 8px color-mix(in oklab, var(--accent), transparent 50%);
+  }
+  .mn-logo-txt {
+    font-family: var(--font-display);
+    font-weight: 700;
+    color: var(--fg-hi);
+    letter-spacing: 0.05em;
+    font-size: 13px;
+  }
+  .mn-aside-sub {
+    color: var(--fg-muted);
+    font-size: 10.5px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-top: 3px;
+    margin-left: 18px;
+  }
+  .mn-aside-card {
+    margin: 16px 0 18px;
+    padding: 14px;
+    border: 1px solid var(--border);
+    background: var(--bg-2);
+    border-radius: 6px;
+    position: relative;
+  }
+  .mn-badge {
+    position: absolute;
+    top: -8px;
+    right: 10px;
+    background: var(--accent);
+    color: var(--bg);
+    font-family: var(--font-display);
+    font-size: 9.5px;
+    font-weight: 700;
+    padding: 2px 6px;
+    letter-spacing: 0.06em;
+    border-radius: 3px;
+  }
+  .mn-aside-name {
+    font-family: var(--font-display);
+    font-size: 15px;
+    color: var(--fg-hi);
+    font-weight: 600;
+  }
+  .mn-aside-role { color: var(--fg-dim); font-size: 11.5px; margin: 3px 0 10px; }
+  .mn-aside-meta {
+    display: grid;
+    gap: 4px;
+    font-size: 11.5px;
+    font-family: var(--font-display);
+  }
+  .mn-k { color: var(--fg-muted); display: inline-block; min-width: 48px; }
+  .mn-toc-title {
+    font-family: var(--font-display);
+    font-size: 10.5px;
+    letter-spacing: 0.08em;
+    color: var(--fg-muted);
+    text-transform: uppercase;
+    margin: 0 0 8px;
+    padding-left: 2px;
+  }
+  .mn-toc { display: grid; gap: 1px; margin-bottom: 20px; }
+  .mn-toc-a {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    padding: 5px 8px;
+    border-radius: 3px;
+    color: var(--fg-dim);
+    border: 0;
+    text-decoration: none;
+    font-family: var(--font-display);
+    font-size: 11.5px;
+    letter-spacing: 0.04em;
+    transition: all 0.12s ease;
+  }
+  .mn-toc-a:hover { color: var(--fg); background: var(--bg-2); }
+  .mn-toc-a.on {
+    color: var(--accent);
+    background: color-mix(in oklab, var(--accent), transparent 88%);
+  }
+  .mn-toc-bullet { color: var(--fg-muted); }
+  .mn-toc-a.on .mn-toc-bullet { color: var(--accent); }
+  .mn-aside-foot {
+    border-top: 1px solid var(--border-soft);
+    padding-top: 10px;
+    font-family: var(--font-display);
+    font-size: 10.5px;
+    color: var(--fg-muted);
+  }
+  .mn-foot-row { display: flex; gap: 6px; }
+  .mn-foot-dot { color: var(--border); }
+</style>

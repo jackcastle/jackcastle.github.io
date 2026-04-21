@@ -1,0 +1,97 @@
+---
+title: 'ai-feed-enrichment'
+displayName: 'AI Feed Enrichment'
+subtitle: 'GPT-4 + Merchant Center pipeline'
+period: '2024'
+lang: 'GPT-4 + Merchant Center'
+stack: ['GPT-4', 'Python', 'Merchant Center', 'Apps Script', 'BigQuery']
+stars: '+4pts ROAS'
+excerpt: 'LLM-based pipeline auto-generating localized product titles and descriptions from catalog data. Validated via A/B test at 99% confidence — lifted ROAS from 14.4x to 18.4x on the DE market.'
+order: 2
+---
+
+import TokenHighlight from '../../components/man/TokenHighlight.astro';
+
+<section id="name" class="mn-sec">
+  <h2 class="mn-h">NAME</h2>
+  <div class="mn-lineblock">
+    <div class="mn-line">
+      <span class="mn-ln">001</span>
+      <div class="mn-line-body">
+        <span class="mn-cmd">ai-feed-enrichment</span> — production GPT-4 pipeline for localized product title/description generation.
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="synopsis" class="mn-sec">
+  <h2 class="mn-h">SYNOPSIS</h2>
+  <div class="mn-lineblock">
+    <div class="mn-line">
+      <span class="mn-ln">001</span>
+      <div class="mn-line-body">
+        <span class="mn-cmd">enrich</span> <span class="mn-flag">--market</span> <TokenHighlight text="DE" /> <span class="mn-flag">--model</span> <TokenHighlight text="GPT-4" /> <span class="mn-flag">--variants</span> ~250k
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="problem" class="mn-sec">
+  <h2 class="mn-h">PROBLEM</h2>
+  <p class="mn-p">
+    <TokenHighlight text="High-end fashion catalog with ~250k size variants on the DE market; product titles and descriptions were literal translations with low keyword density, weak locale-specific phrasing, and no uplift signal. Merchandising bandwidth for manual rewrite was zero. The feed quality ceiling was throttling Shopping campaign performance." />
+  </p>
+</section>
+
+<section id="approach" class="mn-sec">
+  <h2 class="mn-h">APPROACH</h2>
+  <p class="mn-p">
+    <TokenHighlight text="Built an LLM pipeline that pulls catalog + attribute data from the source, calls GPT-4 with market-specific prompts tuned for premium fashion vocabulary, and pushes the enriched titles/descriptions back to Merchant Center. Output validated against a per-SKU quality rubric before publication." />
+  </p>
+  <p class="mn-p">
+    A/B design: <TokenHighlight text="50/50 hold-out by product_id hash across the full catalog in DE. ROAS measured at 99% confidence across a full business cycle. Clean incrementality read with no contamination since variants are disjoint." />
+  </p>
+</section>
+
+<section id="stack" class="mn-sec">
+  <h2 class="mn-h">STACK</h2>
+  <div class="mn-stack">
+    <div class="mn-stack-row">
+      <div class="mn-stack-k">model</div>
+      <div class="mn-stack-v">
+        <span class="mn-chip">GPT-4</span>
+        <span class="mn-chip">custom prompts (DE)</span>
+      </div>
+    </div>
+    <div class="mn-stack-row">
+      <div class="mn-stack-k">runtime</div>
+      <div class="mn-stack-v">
+        <span class="mn-chip">Python</span>
+        <span class="mn-chip">Apps Script</span>
+        <span class="mn-chip">Merchant Center API</span>
+      </div>
+    </div>
+    <div class="mn-stack-row">
+      <div class="mn-stack-k">measurement</div>
+      <div class="mn-stack-v">
+        <span class="mn-chip">A/B (product_id hash)</span>
+        <span class="mn-chip">GA4</span>
+        <span class="mn-chip">BigQuery</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="outcome" class="mn-sec">
+  <h2 class="mn-h">OUTCOME</h2>
+  <p class="mn-p">
+    <TokenHighlight text="ROAS lifted from 14.4x to 18.4x (+4 points) on the DE market at 99% confidence. Pipeline designed for rollout across additional markets and languages; priority queue keyed by margin × volume." />
+  </p>
+</section>
+
+<section id="see-also" class="mn-sec">
+  <h2 class="mn-h">SEE ALSO</h2>
+  <p class="mn-p dim">
+    <a href="/">/~/cv</a> · <a href="/projects/css-attribution-exposure/">css-attribution-exposure(1)</a> · <a href="/projects/mta-data-lake/">mta-data-lake(1)</a>
+  </p>
+</section>
