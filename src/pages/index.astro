@@ -1,6 +1,8 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import TopBar from '../components/TopBar.astro';
 ---
 <BaseLayout title="Giacomo Castello — Senior Advertising & Martech Manager">
-  <p>hello from base layout</p>
+  <TopBar slot="topbar" path="~/cv" />
+  <p>hello from topbar</p>
 </BaseLayout>
