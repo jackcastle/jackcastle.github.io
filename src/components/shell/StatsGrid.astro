@@ -1,0 +1,45 @@
+---
+import type { CvData } from '../../data/cv';
+interface Props { cv: CvData; }
+const { cv } = Astro.props;
+---
+<div class="sh-stats">
+  {cv.stats.map((s) => (
+    <div class="sh-stat">
+      <div class="sh-stat-v">{s.value}</div>
+      <div class="sh-stat-k">{s.label}</div>
+    </div>
+  ))}
+</div>
+
+<style>
+  .sh-stats {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 10px;
+    margin: 4px 0 12px;
+  }
+  .sh-stat {
+    border: 1px solid var(--border);
+    background: color-mix(in oklab, var(--bg-2), transparent 30%);
+    padding: 10px 12px;
+    border-radius: 6px;
+  }
+  .sh-stat-v {
+    font-family: var(--font-display);
+    font-size: 20px;
+    color: var(--accent);
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+  .sh-stat-k {
+    font-size: 10.5px;
+    color: var(--fg-dim);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    margin-top: 3px;
+  }
+  @media (max-width: 900px) {
+    .sh-stats { grid-template-columns: repeat(2, 1fr); }
+  }
+</style>

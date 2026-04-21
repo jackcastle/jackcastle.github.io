@@ -1,0 +1,96 @@
+---
+title: 'mta-data-lake'
+displayName: 'MTA Data Lake'
+subtitle: 'BigQuery architecture for unified attribution'
+period: '2024'
+lang: 'BigQuery architecture'
+stack: ['BigQuery', 'GA4', 'Google Ads', 'Meta', 'TikTok']
+stars: 'designed'
+excerpt: 'Unified attribution architecture on BigQuery consolidating GA4, Google Ads, Meta, TikTok and other platforms into a single event-level model. Supports custom windows, incrementality overlays, and channel-level contribution beyond platform ROAS.'
+order: 3
+---
+
+import TokenHighlight from '../../components/man/TokenHighlight.astro';
+
+<section id="name" class="mn-sec">
+  <h2 class="mn-h">NAME</h2>
+  <div class="mn-lineblock">
+    <div class="mn-line">
+      <span class="mn-ln">001</span>
+      <div class="mn-line-body">
+        <span class="mn-cmd">mta-data-lake</span> — BigQuery attribution architecture spanning all paid channels.
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="synopsis" class="mn-sec">
+  <h2 class="mn-h">SYNOPSIS</h2>
+  <div class="mn-lineblock">
+    <div class="mn-line">
+      <span class="mn-ln">001</span>
+      <div class="mn-line-body">
+        <span class="mn-cmd">bq build</span> <span class="mn-flag">--sources</span> <TokenHighlight text="GA4 Ads Meta TikTok" /> <span class="mn-flag">--model</span> event-level-unified
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="problem" class="mn-sec">
+  <h2 class="mn-h">PROBLEM</h2>
+  <p class="mn-p">
+    <TokenHighlight text="Platform-reported ROAS double-counts conversions across channels and uses each platform's own attribution window. Media mix decisions made on that signal over-credit last-click channels and under-credit upper-funnel investment. We needed a single source of truth at the event level to reason about channel contribution and run holdout/incrementality overlays." />
+  </p>
+</section>
+
+<section id="approach" class="mn-sec">
+  <h2 class="mn-h">APPROACH</h2>
+  <p class="mn-p">
+    <TokenHighlight text="Designed a BigQuery lakehouse architecture consolidating GA4 export, Google Ads Data Transfer, Meta Marketing API, TikTok Ads API, and other platform feeds into a normalized event-level schema. Windows are configurable per analysis. Incrementality results (from GeoLift / holdouts) overlay as adjustment factors. Output surfaces via Looker Studio for media planning and executive reporting." />
+  </p>
+</section>
+
+<section id="stack" class="mn-sec">
+  <h2 class="mn-h">STACK</h2>
+  <div class="mn-stack">
+    <div class="mn-stack-row">
+      <div class="mn-stack-k">sources</div>
+      <div class="mn-stack-v">
+        <span class="mn-chip">GA4 export</span>
+        <span class="mn-chip">Google Ads DT</span>
+        <span class="mn-chip">Meta API</span>
+        <span class="mn-chip">TikTok API</span>
+      </div>
+    </div>
+    <div class="mn-stack-row">
+      <div class="mn-stack-k">layer</div>
+      <div class="mn-stack-v">
+        <span class="mn-chip">BigQuery</span>
+        <span class="mn-chip">normalized event schema</span>
+        <span class="mn-chip">configurable windows</span>
+      </div>
+    </div>
+    <div class="mn-stack-row">
+      <div class="mn-stack-k">overlays</div>
+      <div class="mn-stack-v">
+        <span class="mn-chip">incrementality</span>
+        <span class="mn-chip">GeoLift</span>
+        <span class="mn-chip">holdouts</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="outcome" class="mn-sec">
+  <h2 class="mn-h">OUTCOME</h2>
+  <p class="mn-p">
+    <TokenHighlight text="Architecture designed and specified for implementation. Unblocks media-mix decisions that go beyond platform-reported ROAS and enables rigorous incrementality overlays at the channel level." />
+  </p>
+</section>
+
+<section id="see-also" class="mn-sec">
+  <h2 class="mn-h">SEE ALSO</h2>
+  <p class="mn-p dim">
+    <a href="/">/~/cv</a> · <a href="/projects/css-attribution-exposure/">css-attribution-exposure(1)</a> · <a href="/projects/ai-feed-enrichment/">ai-feed-enrichment(1)</a>
+  </p>
+</section>

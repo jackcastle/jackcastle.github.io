@@ -1,0 +1,37 @@
+---
+import type { GetStaticPaths } from 'astro';
+import { getCollection, render } from 'astro:content';
+import ManPageLayout from '../../layouts/ManPageLayout.astro';
+
+export const getStaticPaths = (async () => {
+  const projects = await getCollection('projects');
+  return projects.map((p) => ({
+    params: { slug: p.id },
+    props: { project: p },
+  }));
+}) satisfies GetStaticPaths;
+
+const { project } = Astro.props;
+const { Content } = await render(project);
+
+const toc = [
+  { id: 'name', label: 'NAME' },
+  { id: 'synopsis', label: 'SYNOPSIS' },
+  { id: 'problem', label: 'PROBLEM' },
+  { id: 'approach', label: 'APPROACH' },
+  { id: 'stack', label: 'STACK' },
+  { id: 'outcome', label: 'OUTCOME' },
+  { id: 'see-also', label: 'SEE ALSO' },
+];
+
+const pageTitle = `${project.data.displayName} — ${project.data.subtitle}`;
+---
+<ManPageLayout
+  title={pageTitle}
+  description={project.data.excerpt}
+  manPageId={`${project.id.toUpperCase().replace(/-/g, '_')}(1)`}
+  toc={toc}
+  topbarPath={`projects/${project.id}`}
+>
+  <Content />
+</ManPageLayout>

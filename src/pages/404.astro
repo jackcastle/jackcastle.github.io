@@ -1,0 +1,21 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import TopBar from '../components/TopBar.astro';
+import ShellWindow from '../components/shell/ShellWindow.astro';
+import Prompt from '../components/shell/Prompt.astro';
+---
+<BaseLayout title="404 — not found">
+  <TopBar slot="topbar" path="~/404" />
+  <ShellWindow title="404 — -bash — 132×60">
+    <Prompt cmd="find ." />
+    <div class="sh-out">
+      <p><span class="dim">find: '.': no such file or directory</span></p>
+      <p>try <a href="/">~/cv</a> instead.</p>
+    </div>
+    <Prompt cmd="" caret={true} blink={true} />
+  </ShellWindow>
+</BaseLayout>
+
+<style>
+  .sh-out { padding: 2px 0; margin-bottom: 4px; }
+</style>

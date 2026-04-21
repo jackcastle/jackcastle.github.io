@@ -1,0 +1,96 @@
+---
+title: 'css-attribution-exposure'
+displayName: 'CSS Attribution Exposure'
+subtitle: 'BigQuery investigation · FR·DE'
+period: '2024'
+lang: 'BigQuery'
+stack: ['BigQuery', 'GA4', 'Google Ads Data Transfer', 'GCLID']
+stars: 'FR·DE'
+excerpt: 'Production BigQuery query joining GA4 export and Google Ads Data Transfer to detect GCLID mismatches and quantify the conversion contribution of third-party Comparison Shopping Services in FR and DE.'
+order: 1
+---
+
+import TokenHighlight from '../../components/man/TokenHighlight.astro';
+
+<section id="name" class="mn-sec">
+  <h2 class="mn-h">NAME</h2>
+  <div class="mn-lineblock">
+    <div class="mn-line">
+      <span class="mn-ln">001</span>
+      <div class="mn-line-body">
+        <span class="mn-cmd">css-attribution-exposure</span> — BigQuery investigation exposing CSS-driven conversions attributed to Google Ads.
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="synopsis" class="mn-sec">
+  <h2 class="mn-h">SYNOPSIS</h2>
+  <div class="mn-lineblock">
+    <div class="mn-line">
+      <span class="mn-ln">001</span>
+      <div class="mn-line-body">
+        <span class="mn-cmd">bq query</span> <span class="mn-flag">--markets</span> <TokenHighlight text="DE FR" /> <span class="mn-flag">--join</span> ga4 × ads-data-transfer
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="problem" class="mn-sec">
+  <h2 class="mn-h">PROBLEM</h2>
+  <p class="mn-p">
+    <TokenHighlight text="Google Ads auction insights hinted that a non-trivial share of impressions and clicks in DE and FR were being intermediated by third-party Comparison Shopping Services (CSS). Google Ads reporting alone cannot distinguish CSS-driven performance from direct inventory — yet bidding, budget, and exclusion decisions rely on that signal. We needed an event-level join to quantify exposure and inform mitigation." />
+  </p>
+</section>
+
+<section id="approach" class="mn-sec">
+  <h2 class="mn-h">APPROACH</h2>
+  <p class="mn-p">
+    <TokenHighlight text="Built a production BigQuery query joining the GA4 export (sessions with gclid + page referrer) with the Google Ads Data Transfer ClickStats tables (criterion-level auction metadata). The join surfaces GCLID mismatches where the ad account's attribution differs from session-level referrer evidence — the signature of CSS-intermediated traffic." />
+  </p>
+  <p class="mn-p">
+    Output: per-market CSS-exposure rate, conversion contribution delta, and impacted campaign × keyword list. Fed directly into the bidding review in each market.
+  </p>
+</section>
+
+<section id="stack" class="mn-sec">
+  <h2 class="mn-h">STACK</h2>
+  <div class="mn-stack">
+    <div class="mn-stack-row">
+      <div class="mn-stack-k">data</div>
+      <div class="mn-stack-v">
+        <span class="mn-chip">GA4 BigQuery export</span>
+        <span class="mn-chip">Ads Data Transfer</span>
+        <span class="mn-chip">GCLID join</span>
+      </div>
+    </div>
+    <div class="mn-stack-row">
+      <div class="mn-stack-k">engine</div>
+      <div class="mn-stack-v">
+        <span class="mn-chip">BigQuery SQL</span>
+        <span class="mn-chip">scheduled queries</span>
+      </div>
+    </div>
+    <div class="mn-stack-row">
+      <div class="mn-stack-k">activation</div>
+      <div class="mn-stack-v">
+        <span class="mn-chip">Looker Studio</span>
+        <span class="mn-chip">bidding review</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="outcome" class="mn-sec">
+  <h2 class="mn-h">OUTCOME</h2>
+  <p class="mn-p">
+    <TokenHighlight text="Quantified CSS exposure at the campaign × keyword level in DE and FR. Informed bidding adjustments and exclusion strategy against specific CSS partners; protected margin on the most-intermediated inventory and stabilized reported ROAS against exogenous CSS pressure." />
+  </p>
+</section>
+
+<section id="see-also" class="mn-sec">
+  <h2 class="mn-h">SEE ALSO</h2>
+  <p class="mn-p dim">
+    <a href="/">/~/cv</a> · <a href="/projects/ai-feed-enrichment/">ai-feed-enrichment(1)</a> · <a href="/projects/mta-data-lake/">mta-data-lake(1)</a>
+  </p>
+</section>

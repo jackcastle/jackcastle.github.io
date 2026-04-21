@@ -1,0 +1,35 @@
+---
+import type { CvData } from '../../data/cv';
+interface Props { cv: CvData; }
+const { cv } = Astro.props;
+---
+<div class="sh-contact">
+  <div class="sh-contact-row">
+    <span class="sh-contact-k">email </span>
+    <span class="sh-contact-v"><a href={`mailto:${cv.email}`}>{cv.email}</a></span>
+  </div>
+  <div class="sh-contact-row">
+    <span class="sh-contact-k">phone </span>
+    <span class="sh-contact-v">{cv.phone}</span>
+  </div>
+  <div class="sh-contact-row">
+    <span class="sh-contact-k">where </span>
+    <span class="sh-contact-v">{cv.location} · {cv.mode}</span>
+  </div>
+  <div class="sh-contact-row">
+    <span class="sh-contact-k">refs  </span>
+    <span class="sh-contact-v dim">available upon request</span>
+  </div>
+</div>
+
+<style>
+  .sh-contact { font-family: var(--font-display); }
+  .sh-contact-row {
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    gap: 10px;
+    padding: 2px 0;
+  }
+  .sh-contact-k { color: var(--amber); }
+  .sh-contact-v { color: var(--fg); }
+</style>

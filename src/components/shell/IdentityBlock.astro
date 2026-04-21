@@ -1,0 +1,72 @@
+---
+import type { CvData } from '../../data/cv';
+interface Props { cv: CvData; }
+const { cv } = Astro.props;
+
+const avatar = ` ┌───────────┐
+ │ ▓▓▓▓▓▓▓▓▓ │
+ │ ▓  ▀ ▀  ▓ │
+ │ ▓   ◡   ▓ │
+ │ ▓▓▓▓▓▓▓▓▓ │
+ └───────────┘`;
+---
+<div class="sh-id-row">
+  <pre class="sh-avatar" aria-hidden="true">{avatar}</pre>
+  <div class="sh-id-info">
+    <div class="sh-id-name">{cv.name}</div>
+    <div class="sh-id-role">{cv.role} · <span class="dim">{cv.subrole}</span></div>
+    <div class="sh-id-meta">
+      <span>📍 {cv.location}</span>
+      <span>◐ {cv.mode}</span>
+      <span><a href={`mailto:${cv.email}`}>{cv.email}</a></span>
+      <span>{cv.phone}</span>
+      <span><a href={cv.linkedin} target="_blank" rel="noopener">LinkedIn</a></span>
+    </div>
+    <div class="sh-id-tags">
+      <span class="tag">uid={cv.born}</span>
+      <span class="tag">groups=remote,eu</span>
+      <span class="tag">shell=/bin/zsh</span>
+      <span class="tag">license={cv.license}</span>
+    </div>
+  </div>
+</div>
+
+<style>
+  .sh-id-row {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 20px;
+    align-items: start;
+    padding: 10px 0;
+  }
+  .sh-avatar { margin: 0; color: var(--accent); font-size: 9px; line-height: 1.15; }
+  .sh-id-name {
+    font-family: var(--font-display);
+    font-size: 22px;
+    color: var(--fg-hi);
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+  .sh-id-role { color: var(--fg); margin: 2px 0 10px; }
+  .sh-id-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    color: var(--fg-dim);
+    font-size: 12.5px;
+  }
+  .sh-id-tags { margin-top: 10px; display: flex; gap: 6px; flex-wrap: wrap; }
+  .tag {
+    font-size: 10.5px;
+    letter-spacing: 0.03em;
+    color: var(--accent);
+    border: 1px solid color-mix(in oklab, var(--accent), transparent 60%);
+    background: color-mix(in oklab, var(--accent), transparent 92%);
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-family: var(--font-display);
+  }
+  @media (max-width: 900px) {
+    .sh-id-row { grid-template-columns: 1fr; }
+  }
+</style>

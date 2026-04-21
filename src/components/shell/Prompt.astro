@@ -1,0 +1,43 @@
+---
+interface Props {
+  cmd: string;
+  caret?: boolean;
+  blink?: boolean;
+  typed?: boolean;
+}
+const { cmd, caret = false, blink = false, typed = false } = Astro.props;
+const width = `${cmd.length}ch`;
+---
+<div class="sh-prompt">
+  <span class="sh-user">giacomo</span>
+  <span class="sh-at">@</span>
+  <span class="sh-host">palermo</span>
+  <span class="sh-sep">:</span>
+  <span class="sh-path">~/cv</span>
+  <span class="sh-dollar">$ </span>
+  <span class={`sh-cmd ${typed ? 'typed' : ''}`} style={typed ? `--w:${width}; --steps:${cmd.length}` : undefined}>{cmd}</span>
+  {caret && <span class={`sh-caret ${blink ? 'blink' : ''}`}>▍</span>}
+</div>
+
+<style>
+  .sh-prompt { margin: 18px 0 6px; font-family: var(--font-display); }
+  .sh-user { color: var(--accent); font-weight: 600; }
+  .sh-at, .sh-sep, .sh-dollar { color: var(--fg-dim); }
+  .sh-host { color: var(--cyan); font-weight: 600; }
+  .sh-path { color: var(--violet); }
+  .sh-cmd { color: var(--fg-hi); }
+  .sh-cmd.typed {
+    display: inline-block;
+    overflow: hidden;
+    white-space: nowrap;
+    width: var(--w, auto);
+    animation: typing 0.6s steps(var(--steps, 10)) 1 both;
+  }
+  @keyframes typing { from { width: 0; } to { width: var(--w, auto); } }
+  @media (prefers-reduced-motion: reduce) {
+    .sh-cmd.typed { animation: none; width: auto; }
+  }
+  .sh-caret { color: var(--accent); }
+  .sh-caret.blink { animation: blink 1s step-end infinite; }
+  @keyframes blink { 50% { opacity: 0; } }
+</style>

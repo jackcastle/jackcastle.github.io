@@ -1,0 +1,37 @@
+---
+interface Props { text: string; }
+const { text } = Astro.props;
+
+const re = /(€[\d.,]+[MK]?|\+?\d+(?:\.\d+)?%|\d+(?:\.\d+)?x|~?\d+(?:\.\d+)?k?|FY\d{2}|C1|B2B|ROAS|GMV|GA4|GTM|BigQuery|GCP|AMER|EMEA|APAC|ITP|sGTM|DE|FR|MTA|MMM|GPT-4|LLM|CRM|P&L|CEO|CTO)/g;
+
+type Part = { type: 'text'; value: string } | { type: 'tok'; cls: string; value: string };
+
+const classify = (tok: string): string => {
+  if (tok.startsWith('€')) return 'tok-money';
+  if (tok.endsWith('%')) return 'tok-pct';
+  if (/x$/.test(tok) && /\d/.test(tok)) return 'tok-mult';
+  if (/^(ROAS|GMV|GA4|GTM|BigQuery|GCP|AMER|EMEA|APAC|ITP|sGTM|MTA|MMM|GPT-4|LLM|CRM|P&L|CEO|CTO)$/.test(tok)) return 'tok-kw';
+  if (/^(DE|FR|FY\d{2}|C1|B2B)$/.test(tok)) return 'tok-const';
+  return 'tok-num';
+};
+
+const parts: Part[] = [];
+let last = 0;
+let m: RegExpExecArray | null;
+while ((m = re.exec(text)) !== null) {
+  if (m.index > last) parts.push({ type: 'text', value: text.slice(last, m.index) });
+  parts.push({ type: 'tok', cls: classify(m[0]), value: m[0] });
+  last = m.index + m[0].length;
+}
+if (last < text.length) parts.push({ type: 'text', value: text.slice(last) });
+---
+{parts.map((p) => p.type === 'text' ? p.value : <span class={p.cls}>{p.value}</span>)}
+
+<style is:global>
+  .tok-num { color: var(--violet); }
+  .tok-money { color: var(--accent); font-weight: 600; }
+  .tok-pct { color: var(--ember); font-weight: 600; }
+  .tok-mult { color: var(--accent-2); font-weight: 600; }
+  .tok-kw { color: var(--cyan); }
+  .tok-const { color: var(--amber); }
+</style>
